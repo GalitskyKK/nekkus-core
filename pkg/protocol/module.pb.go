@@ -596,7 +596,7 @@ const file_proto_module_proto_rawDesc = "" +
 	"\bRegister\x12\x1e.nekkus.module.RegisterRequest\x1a\x1f.nekkus.module.RegisterResponse\x12Q\n" +
 	"\x06Notify\x12\".nekkus.module.NotificationRequest\x1a#.nekkus.module.NotificationResponse\x12T\n" +
 	"\rGetSystemInfo\x12 .nekkus.module.SystemInfoRequest\x1a!.nekkus.module.SystemInfoResponse\x12<\n" +
-	"\x03Log\x12\x19.nekkus.module.LogRequest\x1a\x1a.nekkus.module.LogResponseB5Z3github.com/GalitskyKK/nekkus-core/internal/protocolb\x06proto3"
+	"\x03Log\x12\x19.nekkus.module.LogRequest\x1a\x1a.nekkus.module.LogResponseB0Z.github.com/GalitskyKK/nekkus-core/pkg/protocolb\x06proto3"
 
 var (
 	file_proto_module_proto_rawDescOnce sync.Once

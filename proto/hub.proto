@@ -1,7 +1,7 @@
 syntax = "proto3";
 package nekkus.hub;
 
-option go_package = "github.com/GalitskyKK/nekkus-core/internal/protocol";
+option go_package = "github.com/GalitskyKK/nekkus-core/pkg/protocol";
 
 // Hub-to-Module Service
 service ModuleService {

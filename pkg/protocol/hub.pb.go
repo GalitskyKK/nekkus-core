@@ -537,7 +537,7 @@ const file_proto_hub_proto_rawDesc = "" +
 	"\x04Ping\x12\x17.nekkus.hub.PingRequest\x1a\x18.nekkus.hub.PongResponse\x12J\n" +
 	"\rGetWidgetData\x12\x19.nekkus.hub.WidgetRequest\x1a\x1e.nekkus.hub.WidgetDataResponse\x12F\n" +
 	"\rExecuteAction\x12\x19.nekkus.hub.ActionRequest\x1a\x1a.nekkus.hub.ActionResponse\x12J\n" +
-	"\rStreamUpdates\x12\x19.nekkus.hub.UpdateRequest\x1a\x1a.nekkus.hub.UpdateResponse(\x010\x01B5Z3github.com/GalitskyKK/nekkus-core/internal/protocolb\x06proto3"
+	"\rStreamUpdates\x12\x19.nekkus.hub.UpdateRequest\x1a\x1a.nekkus.hub.UpdateResponse(\x010\x01B0Z.github.com/GalitskyKK/nekkus-core/pkg/protocolb\x06proto3"
 
 var (
 	file_proto_hub_proto_rawDescOnce sync.Once
