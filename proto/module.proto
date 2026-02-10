@@ -1,0 +1,73 @@
+syntax = "proto3";
+package nekkus.module;
+
+option go_package = "github.com/GalitskyKK/nekkus-core/internal/protocol";
+
+// Module-to-Hub Service
+service HubService {
+  // Register module with hub
+  rpc Register(RegisterRequest) returns (RegisterResponse);
+
+  // Send notification to hub
+  rpc Notify(NotificationRequest) returns (NotificationResponse);
+
+  // Request system info
+  rpc GetSystemInfo(SystemInfoRequest) returns (SystemInfoResponse);
+
+  // Log message to hub
+  rpc Log(LogRequest) returns (LogResponse);
+}
+
+message RegisterRequest {
+  string module_id = 1;
+  string version = 2;
+  int32 pid = 3;
+}
+
+message RegisterResponse {
+  bool success = 1;
+  string hub_version = 2;
+  map<string, string> capabilities = 3;
+}
+
+message NotificationRequest {
+  string title = 1;
+  string message = 2;
+  NotificationType type = 3;
+}
+
+enum NotificationType {
+  NOTIFICATION_INFO = 0;
+  NOTIFICATION_WARNING = 1;
+  NOTIFICATION_ERROR = 2;
+  NOTIFICATION_SUCCESS = 3;
+}
+
+message NotificationResponse {
+  bool delivered = 1;
+}
+
+message SystemInfoRequest {
+  repeated string fields = 1;  // "os", "arch", "memory", etc.
+}
+
+message SystemInfoResponse {
+  map<string, string> info = 1;
+}
+
+message LogRequest {
+  LogLevel level = 1;
+  string message = 2;
+  map<string, string> metadata = 3;
+}
+
+enum LogLevel {
+  LOG_DEBUG = 0;
+  LOG_INFO = 1;
+  LOG_WARN = 2;
+  LOG_ERROR = 3;
+}
+
+message LogResponse {
+  bool logged = 1;
+}

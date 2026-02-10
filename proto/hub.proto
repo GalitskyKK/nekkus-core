@@ -1,0 +1,67 @@
+syntax = "proto3";
+package nekkus.hub;
+
+option go_package = "github.com/GalitskyKK/nekkus-core/internal/protocol";
+
+// Hub-to-Module Service
+service ModuleService {
+  // Health check
+  rpc Ping(PingRequest) returns (PongResponse);
+
+  // Get current widget data
+  rpc GetWidgetData(WidgetRequest) returns (WidgetDataResponse);
+
+  // Execute module action
+  rpc ExecuteAction(ActionRequest) returns (ActionResponse);
+
+  // Stream real-time updates
+  rpc StreamUpdates(stream UpdateRequest) returns (stream UpdateResponse);
+}
+
+message PingRequest {
+  int64 timestamp = 1;
+}
+
+message PongResponse {
+  int64 timestamp = 1;
+  ModuleStatus status = 2;
+}
+
+enum ModuleStatus {
+  UNKNOWN = 0;
+  RUNNING = 1;
+  IDLE = 2;
+  BUSY = 3;
+  ERROR = 4;
+}
+
+message WidgetRequest {
+  string widget_id = 1;
+}
+
+message WidgetDataResponse {
+  string widget_type = 1;  // "chart", "button", "text", "list"
+  bytes data = 2;          // JSON payload
+  int64 timestamp = 3;
+}
+
+message ActionRequest {
+  string action_id = 1;
+  map<string, string> params = 2;
+}
+
+message ActionResponse {
+  bool success = 1;
+  string message = 2;
+  bytes result = 3;
+}
+
+message UpdateRequest {
+  string subscription_id = 1;
+}
+
+message UpdateResponse {
+  string event_type = 1;
+  bytes payload = 2;
+  int64 timestamp = 3;
+}
