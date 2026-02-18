@@ -1,73 +1,137 @@
 syntax = "proto3";
-package nekkus.module;
-
+package nekkus;
 option go_package = "github.com/GalitskyKK/nekkus-core/pkg/protocol";
 
-// Module-to-Hub Service
-service HubService {
-  // Register module with hub
-  rpc Register(RegisterRequest) returns (RegisterResponse);
-
-  // Send notification to hub
-  rpc Notify(NotificationRequest) returns (NotificationResponse);
-
-  // Request system info
-  rpc GetSystemInfo(SystemInfoRequest) returns (SystemInfoResponse);
-
-  // Log message to hub
-  rpc Log(LogRequest) returns (LogResponse);
+service NekkusModule {
+  rpc GetInfo(Empty) returns (ModuleInfo);
+  rpc Health(Empty) returns (HealthStatus);
+  rpc GetWidgets(Empty) returns (WidgetList);
+  rpc GetActions(Empty) returns (ActionList);
+  rpc StreamData(StreamRequest) returns (stream DataEvent);
+  rpc Query(QueryRequest) returns (QueryResponse);
+  rpc Execute(ExecuteRequest) returns (ExecuteResponse);
+  rpc GetSnapshot(Empty) returns (StateSnapshot);
+  rpc RestoreSnapshot(StateSnapshot) returns (RestoreResult);
 }
 
-message RegisterRequest {
-  string module_id = 1;
-  string version = 2;
-  int32 pid = 3;
+message Empty {}
+
+message ModuleInfo {
+  string id = 1;
+  string name = 2;
+  string version = 3;
+  string description = 4;
+  string color = 5;
+  string icon_svg = 6;
+  int32 http_port = 7;
+  int32 grpc_port = 8;
+  string ui_url = 9;
+  repeated string capabilities = 10;
+  repeated string provides = 11;
+  repeated string consumes = 12;
+  ModuleStatus status = 13;
 }
 
-message RegisterResponse {
+enum ModuleStatus {
+  MODULE_STARTING = 0;
+  MODULE_RUNNING = 1;
+  MODULE_ERROR = 2;
+  MODULE_STOPPING = 3;
+}
+
+message HealthStatus {
+  bool healthy = 1;
+  string message = 2;
+  int64 uptime_seconds = 3;
+  map<string, string> details = 4;
+}
+
+message WidgetList {
+  repeated Widget widgets = 1;
+}
+
+message Widget {
+  string id = 1;
+  string title = 2;
+  WidgetSize size = 3;
+  string data_endpoint = 4;
+  int32 refresh_interval_ms = 5;
+}
+
+enum WidgetSize {
+  WIDGET_SMALL = 0;
+  WIDGET_MEDIUM = 1;
+  WIDGET_LARGE = 2;
+  WIDGET_WIDE = 3;
+}
+
+message ActionList {
+  repeated Action actions = 1;
+}
+
+message Action {
+  string id = 1;
+  string label = 2;
+  string description = 3;
+  string icon = 4;
+  string module_id = 5;
+  repeated ActionParam params = 6;
+  repeated string tags = 7;
+}
+
+message ActionParam {
+  string name = 1;
+  string type = 2;
+  string label = 3;
+  bool required = 4;
+  string default_value = 5;
+  repeated string options = 6;
+}
+
+message StreamRequest {
+  repeated string topics = 1;
+  int32 interval_ms = 2;
+}
+
+message DataEvent {
+  string topic = 1;
+  string module_id = 2;
+  int64 timestamp = 3;
+  bytes payload = 4;
+}
+
+message QueryRequest {
+  string query_type = 1;
+  map<string, string> params = 2;
+}
+
+message QueryResponse {
   bool success = 1;
-  string hub_version = 2;
-  map<string, string> capabilities = 3;
+  bytes data = 2;
+  string error = 3;
 }
 
-message NotificationRequest {
-  string title = 1;
+message ExecuteRequest {
+  string action_id = 1;
+  map<string, string> params = 2;
+}
+
+message ExecuteResponse {
+  bool success = 1;
   string message = 2;
-  NotificationType type = 3;
+  string error = 3;
 }
 
-enum NotificationType {
-  NOTIFICATION_INFO = 0;
-  NOTIFICATION_WARNING = 1;
-  NOTIFICATION_ERROR = 2;
-  NOTIFICATION_SUCCESS = 3;
+message StateSnapshot {
+  string module_id = 1;
+  string snapshot_id = 2;
+  int64 timestamp = 3;
+  bytes state = 4;
+  map<string, string> metadata = 5;
 }
 
-message NotificationResponse {
-  bool delivered = 1;
-}
-
-message SystemInfoRequest {
-  repeated string fields = 1;  // "os", "arch", "memory", etc.
-}
-
-message SystemInfoResponse {
-  map<string, string> info = 1;
-}
-
-message LogRequest {
-  LogLevel level = 1;
+message RestoreResult {
+  bool success = 1;
   string message = 2;
-  map<string, string> metadata = 3;
-}
-
-enum LogLevel {
-  LOG_DEBUG = 0;
-  LOG_INFO = 1;
-  LOG_WARN = 2;
-  LOG_ERROR = 3;
-}
-
-message LogResponse {
-  bool logged = 1;
+  string error = 3;
 }

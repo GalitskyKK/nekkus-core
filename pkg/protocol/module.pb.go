@@ -21,133 +21,130 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type NotificationType int32
+type ModuleStatus int32
 
 const (
-	NotificationType_NOTIFICATION_INFO    NotificationType = 0
-	NotificationType_NOTIFICATION_WARNING NotificationType = 1
-	NotificationType_NOTIFICATION_ERROR   NotificationType = 2
-	NotificationType_NOTIFICATION_SUCCESS NotificationType = 3
+	ModuleStatus_MODULE_STARTING ModuleStatus = 0
+	ModuleStatus_MODULE_RUNNING  ModuleStatus = 1
+	ModuleStatus_MODULE_ERROR    ModuleStatus = 2
+	ModuleStatus_MODULE_STOPPING ModuleStatus = 3
 )
 
-// Enum value maps for NotificationType.
+// Enum value maps for ModuleStatus.
 var (
-	NotificationType_name = map[int32]string{
-		0: "NOTIFICATION_INFO",
-		1: "NOTIFICATION_WARNING",
-		2: "NOTIFICATION_ERROR",
-		3: "NOTIFICATION_SUCCESS",
+	ModuleStatus_name = map[int32]string{
+		0: "MODULE_STARTING",
+		1: "MODULE_RUNNING",
+		2: "MODULE_ERROR",
+		3: "MODULE_STOPPING",
 	}
-	NotificationType_value = map[string]int32{
-		"NOTIFICATION_INFO":    0,
-		"NOTIFICATION_WARNING": 1,
-		"NOTIFICATION_ERROR":   2,
-		"NOTIFICATION_SUCCESS": 3,
+	ModuleStatus_value = map[string]int32{
+		"MODULE_STARTING": 0,
+		"MODULE_RUNNING":  1,
+		"MODULE_ERROR":    2,
+		"MODULE_STOPPING": 3,
 	}
 )
 
-func (x NotificationType) Enum() *NotificationType {
-	p := new(NotificationType)
+func (x ModuleStatus) Enum() *ModuleStatus {
+	p := new(ModuleStatus)
 	*p = x
 	return p
 }
 
-func (x NotificationType) String() string {
+func (x ModuleStatus) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (NotificationType) Descriptor() protoreflect.EnumDescriptor {
+func (ModuleStatus) Descriptor() protoreflect.EnumDescriptor {
 	return file_proto_module_proto_enumTypes[0].Descriptor()
 }
 
-func (NotificationType) Type() protoreflect.EnumType {
+func (ModuleStatus) Type() protoreflect.EnumType {
 	return &file_proto_module_proto_enumTypes[0]
 }
 
-func (x NotificationType) Number() protoreflect.EnumNumber {
+func (x ModuleStatus) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use NotificationType.Descriptor instead.
-func (NotificationType) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use ModuleStatus.Descriptor instead.
+func (ModuleStatus) EnumDescriptor() ([]byte, []int) {
 	return file_proto_module_proto_rawDescGZIP(), []int{0}
 }
 
-type LogLevel int32
+type WidgetSize int32
 
 const (
-	LogLevel_LOG_DEBUG LogLevel = 0
-	LogLevel_LOG_INFO  LogLevel = 1
-	LogLevel_LOG_WARN  LogLevel = 2
-	LogLevel_LOG_ERROR LogLevel = 3
+	WidgetSize_WIDGET_SMALL  WidgetSize = 0
+	WidgetSize_WIDGET_MEDIUM WidgetSize = 1
+	WidgetSize_WIDGET_LARGE  WidgetSize = 2
+	WidgetSize_WIDGET_WIDE   WidgetSize = 3
 )
 
-// Enum value maps for LogLevel.
+// Enum value maps for WidgetSize.
 var (
-	LogLevel_name = map[int32]string{
-		0: "LOG_DEBUG",
-		1: "LOG_INFO",
-		2: "LOG_WARN",
-		3: "LOG_ERROR",
+	WidgetSize_name = map[int32]string{
+		0: "WIDGET_SMALL",
+		1: "WIDGET_MEDIUM",
+		2: "WIDGET_LARGE",
+		3: "WIDGET_WIDE",
 	}
-	LogLevel_value = map[string]int32{
-		"LOG_DEBUG": 0,
-		"LOG_INFO":  1,
-		"LOG_WARN":  2,
-		"LOG_ERROR": 3,
+	WidgetSize_value = map[string]int32{
+		"WIDGET_SMALL":  0,
+		"WIDGET_MEDIUM": 1,
+		"WIDGET_LARGE":  2,
+		"WIDGET_WIDE":   3,
 	}
 )
 
-func (x LogLevel) Enum() *LogLevel {
-	p := new(LogLevel)
+func (x WidgetSize) Enum() *WidgetSize {
+	p := new(WidgetSize)
 	*p = x
 	return p
 }
 
-func (x LogLevel) String() string {
+func (x WidgetSize) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (LogLevel) Descriptor() protoreflect.EnumDescriptor {
+func (WidgetSize) Descriptor() protoreflect.EnumDescriptor {
 	return file_proto_module_proto_enumTypes[1].Descriptor()
 }
 
-func (LogLevel) Type() protoreflect.EnumType {
+func (WidgetSize) Type() protoreflect.EnumType {
 	return &file_proto_module_proto_enumTypes[1]
 }
 
-func (x LogLevel) Number() protoreflect.EnumNumber {
+func (x WidgetSize) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use LogLevel.Descriptor instead.
-func (LogLevel) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use WidgetSize.Descriptor instead.
+func (WidgetSize) EnumDescriptor() ([]byte, []int) {
 	return file_proto_module_proto_rawDescGZIP(), []int{1}
 }
 
-type RegisterRequest struct {
+type Empty struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	ModuleId      string                 `protobuf:"bytes,1,opt,name=module_id,json=moduleId,proto3" json:"module_id,omitempty"`
-	Version       string                 `protobuf:"bytes,2,opt,name=version,proto3" json:"version,omitempty"`
-	Pid           int32                  `protobuf:"varint,3,opt,name=pid,proto3" json:"pid,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *RegisterRequest) Reset() {
-	*x = RegisterRequest{}
+func (x *Empty) Reset() {
+	*x = Empty{}
 	mi := &file_proto_module_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *RegisterRequest) String() string {
+func (x *Empty) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*RegisterRequest) ProtoMessage() {}
+func (*Empty) ProtoMessage() {}
 
-func (x *RegisterRequest) ProtoReflect() protoreflect.Message {
+func (x *Empty) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_module_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -159,115 +156,175 @@ func (x *RegisterRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use RegisterRequest.ProtoReflect.Descriptor instead.
-func (*RegisterRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use Empty.ProtoReflect.Descriptor instead.
+func (*Empty) Descriptor() ([]byte, []int) {
 	return file_proto_module_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *RegisterRequest) GetModuleId() string {
+type ModuleInfo struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Version       string                 `protobuf:"bytes,3,opt,name=version,proto3" json:"version,omitempty"`
+	Description   string                 `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
+	Color         string                 `protobuf:"bytes,5,opt,name=color,proto3" json:"color,omitempty"`
+	IconSvg       string                 `protobuf:"bytes,6,opt,name=icon_svg,json=iconSvg,proto3" json:"icon_svg,omitempty"`
+	HttpPort      int32                  `protobuf:"varint,7,opt,name=http_port,json=httpPort,proto3" json:"http_port,omitempty"`
+	GrpcPort      int32                  `protobuf:"varint,8,opt,name=grpc_port,json=grpcPort,proto3" json:"grpc_port,omitempty"`
+	UiUrl         string                 `protobuf:"bytes,9,opt,name=ui_url,json=uiUrl,proto3" json:"ui_url,omitempty"`
+	Capabilities  []string               `protobuf:"bytes,10,rep,name=capabilities,proto3" json:"capabilities,omitempty"`
+	Provides      []string               `protobuf:"bytes,11,rep,name=provides,proto3" json:"provides,omitempty"`
+	Consumes      []string               `protobuf:"bytes,12,rep,name=consumes,proto3" json:"consumes,omitempty"`
+	Status        ModuleStatus           `protobuf:"varint,13,opt,name=status,proto3,enum=nekkus.ModuleStatus" json:"status,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ModuleInfo) Reset() {
+	*x = ModuleInfo{}
+	mi := &file_proto_module_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ModuleInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ModuleInfo) ProtoMessage() {}
+
+func (x *ModuleInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_module_proto_msgTypes[1]
 	if x != nil {
-		return x.ModuleId
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ModuleInfo.ProtoReflect.Descriptor instead.
+func (*ModuleInfo) Descriptor() ([]byte, []int) {
+	return file_proto_module_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *ModuleInfo) GetId() string {
+	if x != nil {
+		return x.Id
 	}
 	return ""
 }
 
-func (x *RegisterRequest) GetVersion() string {
+func (x *ModuleInfo) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *ModuleInfo) GetVersion() string {
 	if x != nil {
 		return x.Version
 	}
 	return ""
 }
 
-func (x *RegisterRequest) GetPid() int32 {
+func (x *ModuleInfo) GetDescription() string {
 	if x != nil {
-		return x.Pid
-	}
-	return 0
-}
-
-type RegisterResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
-	HubVersion    string                 `protobuf:"bytes,2,opt,name=hub_version,json=hubVersion,proto3" json:"hub_version,omitempty"`
-	Capabilities  map[string]string      `protobuf:"bytes,3,rep,name=capabilities,proto3" json:"capabilities,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *RegisterResponse) Reset() {
-	*x = RegisterResponse{}
-	mi := &file_proto_module_proto_msgTypes[1]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *RegisterResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*RegisterResponse) ProtoMessage() {}
-
-func (x *RegisterResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_module_proto_msgTypes[1]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use RegisterResponse.ProtoReflect.Descriptor instead.
-func (*RegisterResponse) Descriptor() ([]byte, []int) {
-	return file_proto_module_proto_rawDescGZIP(), []int{1}
-}
-
-func (x *RegisterResponse) GetSuccess() bool {
-	if x != nil {
-		return x.Success
-	}
-	return false
-}
-
-func (x *RegisterResponse) GetHubVersion() string {
-	if x != nil {
-		return x.HubVersion
+		return x.Description
 	}
 	return ""
 }
 
-func (x *RegisterResponse) GetCapabilities() map[string]string {
+func (x *ModuleInfo) GetColor() string {
+	if x != nil {
+		return x.Color
+	}
+	return ""
+}
+
+func (x *ModuleInfo) GetIconSvg() string {
+	if x != nil {
+		return x.IconSvg
+	}
+	return ""
+}
+
+func (x *ModuleInfo) GetHttpPort() int32 {
+	if x != nil {
+		return x.HttpPort
+	}
+	return 0
+}
+
+func (x *ModuleInfo) GetGrpcPort() int32 {
+	if x != nil {
+		return x.GrpcPort
+	}
+	return 0
+}
+
+func (x *ModuleInfo) GetUiUrl() string {
+	if x != nil {
+		return x.UiUrl
+	}
+	return ""
+}
+
+func (x *ModuleInfo) GetCapabilities() []string {
 	if x != nil {
 		return x.Capabilities
 	}
 	return nil
 }
 
-type NotificationRequest struct {
+func (x *ModuleInfo) GetProvides() []string {
+	if x != nil {
+		return x.Provides
+	}
+	return nil
+}
+
+func (x *ModuleInfo) GetConsumes() []string {
+	if x != nil {
+		return x.Consumes
+	}
+	return nil
+}
+
+func (x *ModuleInfo) GetStatus() ModuleStatus {
+	if x != nil {
+		return x.Status
+	}
+	return ModuleStatus_MODULE_STARTING
+}
+
+type HealthStatus struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Title         string                 `protobuf:"bytes,1,opt,name=title,proto3" json:"title,omitempty"`
+	Healthy       bool                   `protobuf:"varint,1,opt,name=healthy,proto3" json:"healthy,omitempty"`
 	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	Type          NotificationType       `protobuf:"varint,3,opt,name=type,proto3,enum=nekkus.module.NotificationType" json:"type,omitempty"`
+	UptimeSeconds int64                  `protobuf:"varint,3,opt,name=uptime_seconds,json=uptimeSeconds,proto3" json:"uptime_seconds,omitempty"`
+	Details       map[string]string      `protobuf:"bytes,4,rep,name=details,proto3" json:"details,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *NotificationRequest) Reset() {
-	*x = NotificationRequest{}
+func (x *HealthStatus) Reset() {
+	*x = HealthStatus{}
 	mi := &file_proto_module_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *NotificationRequest) String() string {
+func (x *HealthStatus) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*NotificationRequest) ProtoMessage() {}
+func (*HealthStatus) ProtoMessage() {}
 
-func (x *NotificationRequest) ProtoReflect() protoreflect.Message {
+func (x *HealthStatus) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_module_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -279,54 +336,181 @@ func (x *NotificationRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use NotificationRequest.ProtoReflect.Descriptor instead.
-func (*NotificationRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use HealthStatus.ProtoReflect.Descriptor instead.
+func (*HealthStatus) Descriptor() ([]byte, []int) {
 	return file_proto_module_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *NotificationRequest) GetTitle() string {
+func (x *HealthStatus) GetHealthy() bool {
+	if x != nil {
+		return x.Healthy
+	}
+	return false
+}
+
+func (x *HealthStatus) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *HealthStatus) GetUptimeSeconds() int64 {
+	if x != nil {
+		return x.UptimeSeconds
+	}
+	return 0
+}
+
+func (x *HealthStatus) GetDetails() map[string]string {
+	if x != nil {
+		return x.Details
+	}
+	return nil
+}
+
+type WidgetList struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Widgets       []*Widget              `protobuf:"bytes,1,rep,name=widgets,proto3" json:"widgets,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *WidgetList) Reset() {
+	*x = WidgetList{}
+	mi := &file_proto_module_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *WidgetList) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*WidgetList) ProtoMessage() {}
+
+func (x *WidgetList) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_module_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use WidgetList.ProtoReflect.Descriptor instead.
+func (*WidgetList) Descriptor() ([]byte, []int) {
+	return file_proto_module_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *WidgetList) GetWidgets() []*Widget {
+	if x != nil {
+		return x.Widgets
+	}
+	return nil
+}
+
+type Widget struct {
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	Id                string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Title             string                 `protobuf:"bytes,2,opt,name=title,proto3" json:"title,omitempty"`
+	Size              WidgetSize             `protobuf:"varint,3,opt,name=size,proto3,enum=nekkus.WidgetSize" json:"size,omitempty"`
+	DataEndpoint      string                 `protobuf:"bytes,4,opt,name=data_endpoint,json=dataEndpoint,proto3" json:"data_endpoint,omitempty"`
+	RefreshIntervalMs int32                  `protobuf:"varint,5,opt,name=refresh_interval_ms,json=refreshIntervalMs,proto3" json:"refresh_interval_ms,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
+}
+
+func (x *Widget) Reset() {
+	*x = Widget{}
+	mi := &file_proto_module_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Widget) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Widget) ProtoMessage() {}
+
+func (x *Widget) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_module_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Widget.ProtoReflect.Descriptor instead.
+func (*Widget) Descriptor() ([]byte, []int) {
+	return file_proto_module_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *Widget) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *Widget) GetTitle() string {
 	if x != nil {
 		return x.Title
 	}
 	return ""
 }
 
-func (x *NotificationRequest) GetMessage() string {
+func (x *Widget) GetSize() WidgetSize {
 	if x != nil {
-		return x.Message
+		return x.Size
+	}
+	return WidgetSize_WIDGET_SMALL
+}
+
+func (x *Widget) GetDataEndpoint() string {
+	if x != nil {
+		return x.DataEndpoint
 	}
 	return ""
 }
 
-func (x *NotificationRequest) GetType() NotificationType {
+func (x *Widget) GetRefreshIntervalMs() int32 {
 	if x != nil {
-		return x.Type
+		return x.RefreshIntervalMs
 	}
-	return NotificationType_NOTIFICATION_INFO
+	return 0
 }
 
-type NotificationResponse struct {
+type ActionList struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Delivered     bool                   `protobuf:"varint,1,opt,name=delivered,proto3" json:"delivered,omitempty"`
+	Actions       []*Action              `protobuf:"bytes,1,rep,name=actions,proto3" json:"actions,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *NotificationResponse) Reset() {
-	*x = NotificationResponse{}
-	mi := &file_proto_module_proto_msgTypes[3]
+func (x *ActionList) Reset() {
+	*x = ActionList{}
+	mi := &file_proto_module_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *NotificationResponse) String() string {
+func (x *ActionList) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*NotificationResponse) ProtoMessage() {}
+func (*ActionList) ProtoMessage() {}
 
-func (x *NotificationResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_module_proto_msgTypes[3]
+func (x *ActionList) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_module_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -337,40 +521,217 @@ func (x *NotificationResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use NotificationResponse.ProtoReflect.Descriptor instead.
-func (*NotificationResponse) Descriptor() ([]byte, []int) {
-	return file_proto_module_proto_rawDescGZIP(), []int{3}
+// Deprecated: Use ActionList.ProtoReflect.Descriptor instead.
+func (*ActionList) Descriptor() ([]byte, []int) {
+	return file_proto_module_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *NotificationResponse) GetDelivered() bool {
+func (x *ActionList) GetActions() []*Action {
 	if x != nil {
-		return x.Delivered
+		return x.Actions
+	}
+	return nil
+}
+
+type Action struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Label         string                 `protobuf:"bytes,2,opt,name=label,proto3" json:"label,omitempty"`
+	Description   string                 `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
+	Icon          string                 `protobuf:"bytes,4,opt,name=icon,proto3" json:"icon,omitempty"`
+	ModuleId      string                 `protobuf:"bytes,5,opt,name=module_id,json=moduleId,proto3" json:"module_id,omitempty"`
+	Params        []*ActionParam         `protobuf:"bytes,6,rep,name=params,proto3" json:"params,omitempty"`
+	Tags          []string               `protobuf:"bytes,7,rep,name=tags,proto3" json:"tags,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Action) Reset() {
+	*x = Action{}
+	mi := &file_proto_module_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Action) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Action) ProtoMessage() {}
+
+func (x *Action) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_module_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Action.ProtoReflect.Descriptor instead.
+func (*Action) Descriptor() ([]byte, []int) {
+	return file_proto_module_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *Action) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *Action) GetLabel() string {
+	if x != nil {
+		return x.Label
+	}
+	return ""
+}
+
+func (x *Action) GetDescription() string {
+	if x != nil {
+		return x.Description
+	}
+	return ""
+}
+
+func (x *Action) GetIcon() string {
+	if x != nil {
+		return x.Icon
+	}
+	return ""
+}
+
+func (x *Action) GetModuleId() string {
+	if x != nil {
+		return x.ModuleId
+	}
+	return ""
+}
+
+func (x *Action) GetParams() []*ActionParam {
+	if x != nil {
+		return x.Params
+	}
+	return nil
+}
+
+func (x *Action) GetTags() []string {
+	if x != nil {
+		return x.Tags
+	}
+	return nil
+}
+
+type ActionParam struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Type          string                 `protobuf:"bytes,2,opt,name=type,proto3" json:"type,omitempty"`
+	Label         string                 `protobuf:"bytes,3,opt,name=label,proto3" json:"label,omitempty"`
+	Required      bool                   `protobuf:"varint,4,opt,name=required,proto3" json:"required,omitempty"`
+	DefaultValue  string                 `protobuf:"bytes,5,opt,name=default_value,json=defaultValue,proto3" json:"default_value,omitempty"`
+	Options       []string               `protobuf:"bytes,6,rep,name=options,proto3" json:"options,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ActionParam) Reset() {
+	*x = ActionParam{}
+	mi := &file_proto_module_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ActionParam) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ActionParam) ProtoMessage() {}
+
+func (x *ActionParam) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_module_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ActionParam.ProtoReflect.Descriptor instead.
+func (*ActionParam) Descriptor() ([]byte, []int) {
+	return file_proto_module_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *ActionParam) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *ActionParam) GetType() string {
+	if x != nil {
+		return x.Type
+	}
+	return ""
+}
+
+func (x *ActionParam) GetLabel() string {
+	if x != nil {
+		return x.Label
+	}
+	return ""
+}
+
+func (x *ActionParam) GetRequired() bool {
+	if x != nil {
+		return x.Required
 	}
 	return false
 }
 
-type SystemInfoRequest struct {
+func (x *ActionParam) GetDefaultValue() string {
+	if x != nil {
+		return x.DefaultValue
+	}
+	return ""
+}
+
+func (x *ActionParam) GetOptions() []string {
+	if x != nil {
+		return x.Options
+	}
+	return nil
+}
+
+type StreamRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Fields        []string               `protobuf:"bytes,1,rep,name=fields,proto3" json:"fields,omitempty"` // "os", "arch", "memory", etc.
+	Topics        []string               `protobuf:"bytes,1,rep,name=topics,proto3" json:"topics,omitempty"`
+	IntervalMs    int32                  `protobuf:"varint,2,opt,name=interval_ms,json=intervalMs,proto3" json:"interval_ms,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *SystemInfoRequest) Reset() {
-	*x = SystemInfoRequest{}
-	mi := &file_proto_module_proto_msgTypes[4]
+func (x *StreamRequest) Reset() {
+	*x = StreamRequest{}
+	mi := &file_proto_module_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *SystemInfoRequest) String() string {
+func (x *StreamRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*SystemInfoRequest) ProtoMessage() {}
+func (*StreamRequest) ProtoMessage() {}
 
-func (x *SystemInfoRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_module_proto_msgTypes[4]
+func (x *StreamRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_module_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -381,40 +742,50 @@ func (x *SystemInfoRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use SystemInfoRequest.ProtoReflect.Descriptor instead.
-func (*SystemInfoRequest) Descriptor() ([]byte, []int) {
-	return file_proto_module_proto_rawDescGZIP(), []int{4}
+// Deprecated: Use StreamRequest.ProtoReflect.Descriptor instead.
+func (*StreamRequest) Descriptor() ([]byte, []int) {
+	return file_proto_module_proto_rawDescGZIP(), []int{8}
 }
 
-func (x *SystemInfoRequest) GetFields() []string {
+func (x *StreamRequest) GetTopics() []string {
 	if x != nil {
-		return x.Fields
+		return x.Topics
 	}
 	return nil
 }
 
-type SystemInfoResponse struct {
+func (x *StreamRequest) GetIntervalMs() int32 {
+	if x != nil {
+		return x.IntervalMs
+	}
+	return 0
+}
+
+type DataEvent struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Info          map[string]string      `protobuf:"bytes,1,rep,name=info,proto3" json:"info,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	Topic         string                 `protobuf:"bytes,1,opt,name=topic,proto3" json:"topic,omitempty"`
+	ModuleId      string                 `protobuf:"bytes,2,opt,name=module_id,json=moduleId,proto3" json:"module_id,omitempty"`
+	Timestamp     int64                  `protobuf:"varint,3,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
+	Payload       []byte                 `protobuf:"bytes,4,opt,name=payload,proto3" json:"payload,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *SystemInfoResponse) Reset() {
-	*x = SystemInfoResponse{}
-	mi := &file_proto_module_proto_msgTypes[5]
+func (x *DataEvent) Reset() {
+	*x = DataEvent{}
+	mi := &file_proto_module_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *SystemInfoResponse) String() string {
+func (x *DataEvent) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*SystemInfoResponse) ProtoMessage() {}
+func (*DataEvent) ProtoMessage() {}
 
-func (x *SystemInfoResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_module_proto_msgTypes[5]
+func (x *DataEvent) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_module_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -425,42 +796,227 @@ func (x *SystemInfoResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use SystemInfoResponse.ProtoReflect.Descriptor instead.
-func (*SystemInfoResponse) Descriptor() ([]byte, []int) {
-	return file_proto_module_proto_rawDescGZIP(), []int{5}
+// Deprecated: Use DataEvent.ProtoReflect.Descriptor instead.
+func (*DataEvent) Descriptor() ([]byte, []int) {
+	return file_proto_module_proto_rawDescGZIP(), []int{9}
 }
 
-func (x *SystemInfoResponse) GetInfo() map[string]string {
+func (x *DataEvent) GetTopic() string {
 	if x != nil {
-		return x.Info
+		return x.Topic
+	}
+	return ""
+}
+
+func (x *DataEvent) GetModuleId() string {
+	if x != nil {
+		return x.ModuleId
+	}
+	return ""
+}
+
+func (x *DataEvent) GetTimestamp() int64 {
+	if x != nil {
+		return x.Timestamp
+	}
+	return 0
+}
+
+func (x *DataEvent) GetPayload() []byte {
+	if x != nil {
+		return x.Payload
 	}
 	return nil
 }
 
-type LogRequest struct {
+type QueryRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Level         LogLevel               `protobuf:"varint,1,opt,name=level,proto3,enum=nekkus.module.LogLevel" json:"level,omitempty"`
+	QueryType     string                 `protobuf:"bytes,1,opt,name=query_type,json=queryType,proto3" json:"query_type,omitempty"`
+	Params        map[string]string      `protobuf:"bytes,2,rep,name=params,proto3" json:"params,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *QueryRequest) Reset() {
+	*x = QueryRequest{}
+	mi := &file_proto_module_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *QueryRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*QueryRequest) ProtoMessage() {}
+
+func (x *QueryRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_module_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use QueryRequest.ProtoReflect.Descriptor instead.
+func (*QueryRequest) Descriptor() ([]byte, []int) {
+	return file_proto_module_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *QueryRequest) GetQueryType() string {
+	if x != nil {
+		return x.QueryType
+	}
+	return ""
+}
+
+func (x *QueryRequest) GetParams() map[string]string {
+	if x != nil {
+		return x.Params
+	}
+	return nil
+}
+
+type QueryResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	Data          []byte                 `protobuf:"bytes,2,opt,name=data,proto3" json:"data,omitempty"`
+	Error         string                 `protobuf:"bytes,3,opt,name=error,proto3" json:"error,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *QueryResponse) Reset() {
+	*x = QueryResponse{}
+	mi := &file_proto_module_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *QueryResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*QueryResponse) ProtoMessage() {}
+
+func (x *QueryResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_module_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use QueryResponse.ProtoReflect.Descriptor instead.
+func (*QueryResponse) Descriptor() ([]byte, []int) {
+	return file_proto_module_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *QueryResponse) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *QueryResponse) GetData() []byte {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+func (x *QueryResponse) GetError() string {
+	if x != nil {
+		return x.Error
+	}
+	return ""
+}
+
+type ExecuteRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ActionId      string                 `protobuf:"bytes,1,opt,name=action_id,json=actionId,proto3" json:"action_id,omitempty"`
+	Params        map[string]string      `protobuf:"bytes,2,rep,name=params,proto3" json:"params,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ExecuteRequest) Reset() {
+	*x = ExecuteRequest{}
+	mi := &file_proto_module_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ExecuteRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ExecuteRequest) ProtoMessage() {}
+
+func (x *ExecuteRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_module_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ExecuteRequest.ProtoReflect.Descriptor instead.
+func (*ExecuteRequest) Descriptor() ([]byte, []int) {
+	return file_proto_module_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *ExecuteRequest) GetActionId() string {
+	if x != nil {
+		return x.ActionId
+	}
+	return ""
+}
+
+func (x *ExecuteRequest) GetParams() map[string]string {
+	if x != nil {
+		return x.Params
+	}
+	return nil
+}
+
+type ExecuteResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
 	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	Metadata      map[string]string      `protobuf:"bytes,3,rep,name=metadata,proto3" json:"metadata,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	Error         string                 `protobuf:"bytes,3,opt,name=error,proto3" json:"error,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *LogRequest) Reset() {
-	*x = LogRequest{}
-	mi := &file_proto_module_proto_msgTypes[6]
+func (x *ExecuteResponse) Reset() {
+	*x = ExecuteResponse{}
+	mi := &file_proto_module_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *LogRequest) String() string {
+func (x *ExecuteResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*LogRequest) ProtoMessage() {}
+func (*ExecuteResponse) ProtoMessage() {}
 
-func (x *LogRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_module_proto_msgTypes[6]
+func (x *ExecuteResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_module_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -471,54 +1027,132 @@ func (x *LogRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use LogRequest.ProtoReflect.Descriptor instead.
-func (*LogRequest) Descriptor() ([]byte, []int) {
-	return file_proto_module_proto_rawDescGZIP(), []int{6}
+// Deprecated: Use ExecuteResponse.ProtoReflect.Descriptor instead.
+func (*ExecuteResponse) Descriptor() ([]byte, []int) {
+	return file_proto_module_proto_rawDescGZIP(), []int{13}
 }
 
-func (x *LogRequest) GetLevel() LogLevel {
+func (x *ExecuteResponse) GetSuccess() bool {
 	if x != nil {
-		return x.Level
+		return x.Success
 	}
-	return LogLevel_LOG_DEBUG
+	return false
 }
 
-func (x *LogRequest) GetMessage() string {
+func (x *ExecuteResponse) GetMessage() string {
 	if x != nil {
 		return x.Message
 	}
 	return ""
 }
 
-func (x *LogRequest) GetMetadata() map[string]string {
+func (x *ExecuteResponse) GetError() string {
+	if x != nil {
+		return x.Error
+	}
+	return ""
+}
+
+type StateSnapshot struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ModuleId      string                 `protobuf:"bytes,1,opt,name=module_id,json=moduleId,proto3" json:"module_id,omitempty"`
+	SnapshotId    string                 `protobuf:"bytes,2,opt,name=snapshot_id,json=snapshotId,proto3" json:"snapshot_id,omitempty"`
+	Timestamp     int64                  `protobuf:"varint,3,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
+	State         []byte                 `protobuf:"bytes,4,opt,name=state,proto3" json:"state,omitempty"`
+	Metadata      map[string]string      `protobuf:"bytes,5,rep,name=metadata,proto3" json:"metadata,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *StateSnapshot) Reset() {
+	*x = StateSnapshot{}
+	mi := &file_proto_module_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *StateSnapshot) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StateSnapshot) ProtoMessage() {}
+
+func (x *StateSnapshot) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_module_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StateSnapshot.ProtoReflect.Descriptor instead.
+func (*StateSnapshot) Descriptor() ([]byte, []int) {
+	return file_proto_module_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *StateSnapshot) GetModuleId() string {
+	if x != nil {
+		return x.ModuleId
+	}
+	return ""
+}
+
+func (x *StateSnapshot) GetSnapshotId() string {
+	if x != nil {
+		return x.SnapshotId
+	}
+	return ""
+}
+
+func (x *StateSnapshot) GetTimestamp() int64 {
+	if x != nil {
+		return x.Timestamp
+	}
+	return 0
+}
+
+func (x *StateSnapshot) GetState() []byte {
+	if x != nil {
+		return x.State
+	}
+	return nil
+}
+
+func (x *StateSnapshot) GetMetadata() map[string]string {
 	if x != nil {
 		return x.Metadata
 	}
 	return nil
 }
 
-type LogResponse struct {
+type RestoreResult struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Logged        bool                   `protobuf:"varint,1,opt,name=logged,proto3" json:"logged,omitempty"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	Error         string                 `protobuf:"bytes,3,opt,name=error,proto3" json:"error,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *LogResponse) Reset() {
-	*x = LogResponse{}
-	mi := &file_proto_module_proto_msgTypes[7]
+func (x *RestoreResult) Reset() {
+	*x = RestoreResult{}
+	mi := &file_proto_module_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *LogResponse) String() string {
+func (x *RestoreResult) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*LogResponse) ProtoMessage() {}
+func (*RestoreResult) ProtoMessage() {}
 
-func (x *LogResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_module_proto_msgTypes[7]
+func (x *RestoreResult) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_module_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -529,74 +1163,157 @@ func (x *LogResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use LogResponse.ProtoReflect.Descriptor instead.
-func (*LogResponse) Descriptor() ([]byte, []int) {
-	return file_proto_module_proto_rawDescGZIP(), []int{7}
+// Deprecated: Use RestoreResult.ProtoReflect.Descriptor instead.
+func (*RestoreResult) Descriptor() ([]byte, []int) {
+	return file_proto_module_proto_rawDescGZIP(), []int{15}
 }
 
-func (x *LogResponse) GetLogged() bool {
+func (x *RestoreResult) GetSuccess() bool {
 	if x != nil {
-		return x.Logged
+		return x.Success
 	}
 	return false
+}
+
+func (x *RestoreResult) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *RestoreResult) GetError() string {
+	if x != nil {
+		return x.Error
+	}
+	return ""
 }
 
 var File_proto_module_proto protoreflect.FileDescriptor
 
 const file_proto_module_proto_rawDesc = "" +
 	"\n" +
-	"\x12proto/module.proto\x12\rnekkus.module\"Z\n" +
-	"\x0fRegisterRequest\x12\x1b\n" +
-	"\tmodule_id\x18\x01 \x01(\tR\bmoduleId\x12\x18\n" +
-	"\aversion\x18\x02 \x01(\tR\aversion\x12\x10\n" +
-	"\x03pid\x18\x03 \x01(\x05R\x03pid\"\xe5\x01\n" +
-	"\x10RegisterResponse\x12\x18\n" +
-	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x1f\n" +
-	"\vhub_version\x18\x02 \x01(\tR\n" +
-	"hubVersion\x12U\n" +
-	"\fcapabilities\x18\x03 \x03(\v21.nekkus.module.RegisterResponse.CapabilitiesEntryR\fcapabilities\x1a?\n" +
-	"\x11CapabilitiesEntry\x12\x10\n" +
-	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"z\n" +
-	"\x13NotificationRequest\x12\x14\n" +
-	"\x05title\x18\x01 \x01(\tR\x05title\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessage\x123\n" +
-	"\x04type\x18\x03 \x01(\x0e2\x1f.nekkus.module.NotificationTypeR\x04type\"4\n" +
-	"\x14NotificationResponse\x12\x1c\n" +
-	"\tdelivered\x18\x01 \x01(\bR\tdelivered\"+\n" +
-	"\x11SystemInfoRequest\x12\x16\n" +
-	"\x06fields\x18\x01 \x03(\tR\x06fields\"\x8e\x01\n" +
-	"\x12SystemInfoResponse\x12?\n" +
-	"\x04info\x18\x01 \x03(\v2+.nekkus.module.SystemInfoResponse.InfoEntryR\x04info\x1a7\n" +
-	"\tInfoEntry\x12\x10\n" +
-	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\xd7\x01\n" +
+	"\x12proto/module.proto\x12\x06nekkus\"\a\n" +
+	"\x05Empty\"\xf8\x02\n" +
 	"\n" +
-	"LogRequest\x12-\n" +
-	"\x05level\x18\x01 \x01(\x0e2\x17.nekkus.module.LogLevelR\x05level\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessage\x12C\n" +
-	"\bmetadata\x18\x03 \x03(\v2'.nekkus.module.LogRequest.MetadataEntryR\bmetadata\x1a;\n" +
+	"ModuleInfo\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12\x18\n" +
+	"\aversion\x18\x03 \x01(\tR\aversion\x12 \n" +
+	"\vdescription\x18\x04 \x01(\tR\vdescription\x12\x14\n" +
+	"\x05color\x18\x05 \x01(\tR\x05color\x12\x19\n" +
+	"\bicon_svg\x18\x06 \x01(\tR\aiconSvg\x12\x1b\n" +
+	"\thttp_port\x18\a \x01(\x05R\bhttpPort\x12\x1b\n" +
+	"\tgrpc_port\x18\b \x01(\x05R\bgrpcPort\x12\x15\n" +
+	"\x06ui_url\x18\t \x01(\tR\x05uiUrl\x12\"\n" +
+	"\fcapabilities\x18\n" +
+	" \x03(\tR\fcapabilities\x12\x1a\n" +
+	"\bprovides\x18\v \x03(\tR\bprovides\x12\x1a\n" +
+	"\bconsumes\x18\f \x03(\tR\bconsumes\x12,\n" +
+	"\x06status\x18\r \x01(\x0e2\x14.nekkus.ModuleStatusR\x06status\"\xe2\x01\n" +
+	"\fHealthStatus\x12\x18\n" +
+	"\ahealthy\x18\x01 \x01(\bR\ahealthy\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\x12%\n" +
+	"\x0euptime_seconds\x18\x03 \x01(\x03R\ruptimeSeconds\x12;\n" +
+	"\adetails\x18\x04 \x03(\v2!.nekkus.HealthStatus.DetailsEntryR\adetails\x1a:\n" +
+	"\fDetailsEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"6\n" +
+	"\n" +
+	"WidgetList\x12(\n" +
+	"\awidgets\x18\x01 \x03(\v2\x0e.nekkus.WidgetR\awidgets\"\xab\x01\n" +
+	"\x06Widget\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x14\n" +
+	"\x05title\x18\x02 \x01(\tR\x05title\x12&\n" +
+	"\x04size\x18\x03 \x01(\x0e2\x12.nekkus.WidgetSizeR\x04size\x12#\n" +
+	"\rdata_endpoint\x18\x04 \x01(\tR\fdataEndpoint\x12.\n" +
+	"\x13refresh_interval_ms\x18\x05 \x01(\x05R\x11refreshIntervalMs\"6\n" +
+	"\n" +
+	"ActionList\x12(\n" +
+	"\aactions\x18\x01 \x03(\v2\x0e.nekkus.ActionR\aactions\"\xc2\x01\n" +
+	"\x06Action\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x14\n" +
+	"\x05label\x18\x02 \x01(\tR\x05label\x12 \n" +
+	"\vdescription\x18\x03 \x01(\tR\vdescription\x12\x12\n" +
+	"\x04icon\x18\x04 \x01(\tR\x04icon\x12\x1b\n" +
+	"\tmodule_id\x18\x05 \x01(\tR\bmoduleId\x12+\n" +
+	"\x06params\x18\x06 \x03(\v2\x13.nekkus.ActionParamR\x06params\x12\x12\n" +
+	"\x04tags\x18\a \x03(\tR\x04tags\"\xa6\x01\n" +
+	"\vActionParam\x12\x12\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name\x12\x12\n" +
+	"\x04type\x18\x02 \x01(\tR\x04type\x12\x14\n" +
+	"\x05label\x18\x03 \x01(\tR\x05label\x12\x1a\n" +
+	"\brequired\x18\x04 \x01(\bR\brequired\x12#\n" +
+	"\rdefault_value\x18\x05 \x01(\tR\fdefaultValue\x12\x18\n" +
+	"\aoptions\x18\x06 \x03(\tR\aoptions\"H\n" +
+	"\rStreamRequest\x12\x16\n" +
+	"\x06topics\x18\x01 \x03(\tR\x06topics\x12\x1f\n" +
+	"\vinterval_ms\x18\x02 \x01(\x05R\n" +
+	"intervalMs\"v\n" +
+	"\tDataEvent\x12\x14\n" +
+	"\x05topic\x18\x01 \x01(\tR\x05topic\x12\x1b\n" +
+	"\tmodule_id\x18\x02 \x01(\tR\bmoduleId\x12\x1c\n" +
+	"\ttimestamp\x18\x03 \x01(\x03R\ttimestamp\x12\x18\n" +
+	"\apayload\x18\x04 \x01(\fR\apayload\"\xa2\x01\n" +
+	"\fQueryRequest\x12\x1d\n" +
+	"\n" +
+	"query_type\x18\x01 \x01(\tR\tqueryType\x128\n" +
+	"\x06params\x18\x02 \x03(\v2 .nekkus.QueryRequest.ParamsEntryR\x06params\x1a9\n" +
+	"\vParamsEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"S\n" +
+	"\rQueryResponse\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x12\n" +
+	"\x04data\x18\x02 \x01(\fR\x04data\x12\x14\n" +
+	"\x05error\x18\x03 \x01(\tR\x05error\"\xa4\x01\n" +
+	"\x0eExecuteRequest\x12\x1b\n" +
+	"\taction_id\x18\x01 \x01(\tR\bactionId\x12:\n" +
+	"\x06params\x18\x02 \x03(\v2\".nekkus.ExecuteRequest.ParamsEntryR\x06params\x1a9\n" +
+	"\vParamsEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"[\n" +
+	"\x0fExecuteResponse\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\x12\x14\n" +
+	"\x05error\x18\x03 \x01(\tR\x05error\"\xff\x01\n" +
+	"\rStateSnapshot\x12\x1b\n" +
+	"\tmodule_id\x18\x01 \x01(\tR\bmoduleId\x12\x1f\n" +
+	"\vsnapshot_id\x18\x02 \x01(\tR\n" +
+	"snapshotId\x12\x1c\n" +
+	"\ttimestamp\x18\x03 \x01(\x03R\ttimestamp\x12\x14\n" +
+	"\x05state\x18\x04 \x01(\fR\x05state\x12?\n" +
+	"\bmetadata\x18\x05 \x03(\v2#.nekkus.StateSnapshot.MetadataEntryR\bmetadata\x1a;\n" +
 	"\rMetadataEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"%\n" +
-	"\vLogResponse\x12\x16\n" +
-	"\x06logged\x18\x01 \x01(\bR\x06logged*u\n" +
-	"\x10NotificationType\x12\x15\n" +
-	"\x11NOTIFICATION_INFO\x10\x00\x12\x18\n" +
-	"\x14NOTIFICATION_WARNING\x10\x01\x12\x16\n" +
-	"\x12NOTIFICATION_ERROR\x10\x02\x12\x18\n" +
-	"\x14NOTIFICATION_SUCCESS\x10\x03*D\n" +
-	"\bLogLevel\x12\r\n" +
-	"\tLOG_DEBUG\x10\x00\x12\f\n" +
-	"\bLOG_INFO\x10\x01\x12\f\n" +
-	"\bLOG_WARN\x10\x02\x12\r\n" +
-	"\tLOG_ERROR\x10\x032\xc0\x02\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"Y\n" +
+	"\rRestoreResult\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\x12\x14\n" +
+	"\x05error\x18\x03 \x01(\tR\x05error*^\n" +
+	"\fModuleStatus\x12\x13\n" +
+	"\x0fMODULE_STARTING\x10\x00\x12\x12\n" +
+	"\x0eMODULE_RUNNING\x10\x01\x12\x10\n" +
+	"\fMODULE_ERROR\x10\x02\x12\x13\n" +
+	"\x0fMODULE_STOPPING\x10\x03*T\n" +
 	"\n" +
-	"HubService\x12K\n" +
-	"\bRegister\x12\x1e.nekkus.module.RegisterRequest\x1a\x1f.nekkus.module.RegisterResponse\x12Q\n" +
-	"\x06Notify\x12\".nekkus.module.NotificationRequest\x1a#.nekkus.module.NotificationResponse\x12T\n" +
-	"\rGetSystemInfo\x12 .nekkus.module.SystemInfoRequest\x1a!.nekkus.module.SystemInfoResponse\x12<\n" +
-	"\x03Log\x12\x19.nekkus.module.LogRequest\x1a\x1a.nekkus.module.LogResponseB0Z.github.com/GalitskyKK/nekkus-core/pkg/protocolb\x06proto3"
+	"WidgetSize\x12\x10\n" +
+	"\fWIDGET_SMALL\x10\x00\x12\x11\n" +
+	"\rWIDGET_MEDIUM\x10\x01\x12\x10\n" +
+	"\fWIDGET_LARGE\x10\x02\x12\x0f\n" +
+	"\vWIDGET_WIDE\x10\x032\xef\x03\n" +
+	"\fNekkusModule\x12,\n" +
+	"\aGetInfo\x12\r.nekkus.Empty\x1a\x12.nekkus.ModuleInfo\x12-\n" +
+	"\x06Health\x12\r.nekkus.Empty\x1a\x14.nekkus.HealthStatus\x12/\n" +
+	"\n" +
+	"GetWidgets\x12\r.nekkus.Empty\x1a\x12.nekkus.WidgetList\x12/\n" +
+	"\n" +
+	"GetActions\x12\r.nekkus.Empty\x1a\x12.nekkus.ActionList\x128\n" +
+	"\n" +
+	"StreamData\x12\x15.nekkus.StreamRequest\x1a\x11.nekkus.DataEvent0\x01\x124\n" +
+	"\x05Query\x12\x14.nekkus.QueryRequest\x1a\x15.nekkus.QueryResponse\x12:\n" +
+	"\aExecute\x12\x16.nekkus.ExecuteRequest\x1a\x17.nekkus.ExecuteResponse\x123\n" +
+	"\vGetSnapshot\x12\r.nekkus.Empty\x1a\x15.nekkus.StateSnapshot\x12?\n" +
+	"\x0fRestoreSnapshot\x12\x15.nekkus.StateSnapshot\x1a\x15.nekkus.RestoreResultB0Z.github.com/GalitskyKK/nekkus-core/pkg/protocolb\x06proto3"
 
 var (
 	file_proto_module_proto_rawDescOnce sync.Once
@@ -611,41 +1328,64 @@ func file_proto_module_proto_rawDescGZIP() []byte {
 }
 
 var file_proto_module_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
-var file_proto_module_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
+var file_proto_module_proto_msgTypes = make([]protoimpl.MessageInfo, 20)
 var file_proto_module_proto_goTypes = []any{
-	(NotificationType)(0),        // 0: nekkus.module.NotificationType
-	(LogLevel)(0),                // 1: nekkus.module.LogLevel
-	(*RegisterRequest)(nil),      // 2: nekkus.module.RegisterRequest
-	(*RegisterResponse)(nil),     // 3: nekkus.module.RegisterResponse
-	(*NotificationRequest)(nil),  // 4: nekkus.module.NotificationRequest
-	(*NotificationResponse)(nil), // 5: nekkus.module.NotificationResponse
-	(*SystemInfoRequest)(nil),    // 6: nekkus.module.SystemInfoRequest
-	(*SystemInfoResponse)(nil),   // 7: nekkus.module.SystemInfoResponse
-	(*LogRequest)(nil),           // 8: nekkus.module.LogRequest
-	(*LogResponse)(nil),          // 9: nekkus.module.LogResponse
-	nil,                          // 10: nekkus.module.RegisterResponse.CapabilitiesEntry
-	nil,                          // 11: nekkus.module.SystemInfoResponse.InfoEntry
-	nil,                          // 12: nekkus.module.LogRequest.MetadataEntry
+	(ModuleStatus)(0),       // 0: nekkus.ModuleStatus
+	(WidgetSize)(0),         // 1: nekkus.WidgetSize
+	(*Empty)(nil),           // 2: nekkus.Empty
+	(*ModuleInfo)(nil),      // 3: nekkus.ModuleInfo
+	(*HealthStatus)(nil),    // 4: nekkus.HealthStatus
+	(*WidgetList)(nil),      // 5: nekkus.WidgetList
+	(*Widget)(nil),          // 6: nekkus.Widget
+	(*ActionList)(nil),      // 7: nekkus.ActionList
+	(*Action)(nil),          // 8: nekkus.Action
+	(*ActionParam)(nil),     // 9: nekkus.ActionParam
+	(*StreamRequest)(nil),   // 10: nekkus.StreamRequest
+	(*DataEvent)(nil),       // 11: nekkus.DataEvent
+	(*QueryRequest)(nil),    // 12: nekkus.QueryRequest
+	(*QueryResponse)(nil),   // 13: nekkus.QueryResponse
+	(*ExecuteRequest)(nil),  // 14: nekkus.ExecuteRequest
+	(*ExecuteResponse)(nil), // 15: nekkus.ExecuteResponse
+	(*StateSnapshot)(nil),   // 16: nekkus.StateSnapshot
+	(*RestoreResult)(nil),   // 17: nekkus.RestoreResult
+	nil,                     // 18: nekkus.HealthStatus.DetailsEntry
+	nil,                     // 19: nekkus.QueryRequest.ParamsEntry
+	nil,                     // 20: nekkus.ExecuteRequest.ParamsEntry
+	nil,                     // 21: nekkus.StateSnapshot.MetadataEntry
 }
 var file_proto_module_proto_depIdxs = []int32{
-	10, // 0: nekkus.module.RegisterResponse.capabilities:type_name -> nekkus.module.RegisterResponse.CapabilitiesEntry
-	0,  // 1: nekkus.module.NotificationRequest.type:type_name -> nekkus.module.NotificationType
-	11, // 2: nekkus.module.SystemInfoResponse.info:type_name -> nekkus.module.SystemInfoResponse.InfoEntry
-	1,  // 3: nekkus.module.LogRequest.level:type_name -> nekkus.module.LogLevel
-	12, // 4: nekkus.module.LogRequest.metadata:type_name -> nekkus.module.LogRequest.MetadataEntry
-	2,  // 5: nekkus.module.HubService.Register:input_type -> nekkus.module.RegisterRequest
-	4,  // 6: nekkus.module.HubService.Notify:input_type -> nekkus.module.NotificationRequest
-	6,  // 7: nekkus.module.HubService.GetSystemInfo:input_type -> nekkus.module.SystemInfoRequest
-	8,  // 8: nekkus.module.HubService.Log:input_type -> nekkus.module.LogRequest
-	3,  // 9: nekkus.module.HubService.Register:output_type -> nekkus.module.RegisterResponse
-	5,  // 10: nekkus.module.HubService.Notify:output_type -> nekkus.module.NotificationResponse
-	7,  // 11: nekkus.module.HubService.GetSystemInfo:output_type -> nekkus.module.SystemInfoResponse
-	9,  // 12: nekkus.module.HubService.Log:output_type -> nekkus.module.LogResponse
-	9,  // [9:13] is the sub-list for method output_type
-	5,  // [5:9] is the sub-list for method input_type
-	5,  // [5:5] is the sub-list for extension type_name
-	5,  // [5:5] is the sub-list for extension extendee
-	0,  // [0:5] is the sub-list for field type_name
+	0,  // 0: nekkus.ModuleInfo.status:type_name -> nekkus.ModuleStatus
+	18, // 1: nekkus.HealthStatus.details:type_name -> nekkus.HealthStatus.DetailsEntry
+	6,  // 2: nekkus.WidgetList.widgets:type_name -> nekkus.Widget
+	1,  // 3: nekkus.Widget.size:type_name -> nekkus.WidgetSize
+	8,  // 4: nekkus.ActionList.actions:type_name -> nekkus.Action
+	9,  // 5: nekkus.Action.params:type_name -> nekkus.ActionParam
+	19, // 6: nekkus.QueryRequest.params:type_name -> nekkus.QueryRequest.ParamsEntry
+	20, // 7: nekkus.ExecuteRequest.params:type_name -> nekkus.ExecuteRequest.ParamsEntry
+	21, // 8: nekkus.StateSnapshot.metadata:type_name -> nekkus.StateSnapshot.MetadataEntry
+	2,  // 9: nekkus.NekkusModule.GetInfo:input_type -> nekkus.Empty
+	2,  // 10: nekkus.NekkusModule.Health:input_type -> nekkus.Empty
+	2,  // 11: nekkus.NekkusModule.GetWidgets:input_type -> nekkus.Empty
+	2,  // 12: nekkus.NekkusModule.GetActions:input_type -> nekkus.Empty
+	10, // 13: nekkus.NekkusModule.StreamData:input_type -> nekkus.StreamRequest
+	12, // 14: nekkus.NekkusModule.Query:input_type -> nekkus.QueryRequest
+	14, // 15: nekkus.NekkusModule.Execute:input_type -> nekkus.ExecuteRequest
+	2,  // 16: nekkus.NekkusModule.GetSnapshot:input_type -> nekkus.Empty
+	16, // 17: nekkus.NekkusModule.RestoreSnapshot:input_type -> nekkus.StateSnapshot
+	3,  // 18: nekkus.NekkusModule.GetInfo:output_type -> nekkus.ModuleInfo
+	4,  // 19: nekkus.NekkusModule.Health:output_type -> nekkus.HealthStatus
+	5,  // 20: nekkus.NekkusModule.GetWidgets:output_type -> nekkus.WidgetList
+	7,  // 21: nekkus.NekkusModule.GetActions:output_type -> nekkus.ActionList
+	11, // 22: nekkus.NekkusModule.StreamData:output_type -> nekkus.DataEvent
+	13, // 23: nekkus.NekkusModule.Query:output_type -> nekkus.QueryResponse
+	15, // 24: nekkus.NekkusModule.Execute:output_type -> nekkus.ExecuteResponse
+	16, // 25: nekkus.NekkusModule.GetSnapshot:output_type -> nekkus.StateSnapshot
+	17, // 26: nekkus.NekkusModule.RestoreSnapshot:output_type -> nekkus.RestoreResult
+	18, // [18:27] is the sub-list for method output_type
+	9,  // [9:18] is the sub-list for method input_type
+	9,  // [9:9] is the sub-list for extension type_name
+	9,  // [9:9] is the sub-list for extension extendee
+	0,  // [0:9] is the sub-list for field type_name
 }
 
 func init() { file_proto_module_proto_init() }
@@ -659,7 +1399,7 @@ func file_proto_module_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_module_proto_rawDesc), len(file_proto_module_proto_rawDesc)),
 			NumEnums:      2,
-			NumMessages:   11,
+			NumMessages:   20,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

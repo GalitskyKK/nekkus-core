@@ -19,223 +19,258 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	ModuleService_Ping_FullMethodName          = "/nekkus.hub.ModuleService/Ping"
-	ModuleService_GetWidgetData_FullMethodName = "/nekkus.hub.ModuleService/GetWidgetData"
-	ModuleService_ExecuteAction_FullMethodName = "/nekkus.hub.ModuleService/ExecuteAction"
-	ModuleService_StreamUpdates_FullMethodName = "/nekkus.hub.ModuleService/StreamUpdates"
+	NekkusHub_Register_FullMethodName        = "/nekkus.NekkusHub/Register"
+	NekkusHub_PublishEvent_FullMethodName    = "/nekkus.NekkusHub/PublishEvent"
+	NekkusHub_SubscribeEvents_FullMethodName = "/nekkus.NekkusHub/SubscribeEvents"
+	NekkusHub_CrossQuery_FullMethodName      = "/nekkus.NekkusHub/CrossQuery"
+	NekkusHub_CrossExecute_FullMethodName    = "/nekkus.NekkusHub/CrossExecute"
 )
 
-// ModuleServiceClient is the client API for ModuleService service.
+// NekkusHubClient is the client API for NekkusHub service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-//
-// Hub-to-Module Service
-type ModuleServiceClient interface {
-	// Health check
-	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PongResponse, error)
-	// Get current widget data
-	GetWidgetData(ctx context.Context, in *WidgetRequest, opts ...grpc.CallOption) (*WidgetDataResponse, error)
-	// Execute module action
-	ExecuteAction(ctx context.Context, in *ActionRequest, opts ...grpc.CallOption) (*ActionResponse, error)
-	// Stream real-time updates
-	StreamUpdates(ctx context.Context, opts ...grpc.CallOption) (grpc.BidiStreamingClient[UpdateRequest, UpdateResponse], error)
+type NekkusHubClient interface {
+	Register(ctx context.Context, in *ModuleInfo, opts ...grpc.CallOption) (*RegisterResponse, error)
+	PublishEvent(ctx context.Context, in *DataEvent, opts ...grpc.CallOption) (*PublishResponse, error)
+	SubscribeEvents(ctx context.Context, in *SubscribeRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[DataEvent], error)
+	CrossQuery(ctx context.Context, in *CrossQueryRequest, opts ...grpc.CallOption) (*QueryResponse, error)
+	CrossExecute(ctx context.Context, in *CrossExecuteRequest, opts ...grpc.CallOption) (*ExecuteResponse, error)
 }
 
-type moduleServiceClient struct {
+type nekkusHubClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewModuleServiceClient(cc grpc.ClientConnInterface) ModuleServiceClient {
-	return &moduleServiceClient{cc}
+func NewNekkusHubClient(cc grpc.ClientConnInterface) NekkusHubClient {
+	return &nekkusHubClient{cc}
 }
 
-func (c *moduleServiceClient) Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PongResponse, error) {
+func (c *nekkusHubClient) Register(ctx context.Context, in *ModuleInfo, opts ...grpc.CallOption) (*RegisterResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(PongResponse)
-	err := c.cc.Invoke(ctx, ModuleService_Ping_FullMethodName, in, out, cOpts...)
+	out := new(RegisterResponse)
+	err := c.cc.Invoke(ctx, NekkusHub_Register_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *moduleServiceClient) GetWidgetData(ctx context.Context, in *WidgetRequest, opts ...grpc.CallOption) (*WidgetDataResponse, error) {
+func (c *nekkusHubClient) PublishEvent(ctx context.Context, in *DataEvent, opts ...grpc.CallOption) (*PublishResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(WidgetDataResponse)
-	err := c.cc.Invoke(ctx, ModuleService_GetWidgetData_FullMethodName, in, out, cOpts...)
+	out := new(PublishResponse)
+	err := c.cc.Invoke(ctx, NekkusHub_PublishEvent_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *moduleServiceClient) ExecuteAction(ctx context.Context, in *ActionRequest, opts ...grpc.CallOption) (*ActionResponse, error) {
+func (c *nekkusHubClient) SubscribeEvents(ctx context.Context, in *SubscribeRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[DataEvent], error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ActionResponse)
-	err := c.cc.Invoke(ctx, ModuleService_ExecuteAction_FullMethodName, in, out, cOpts...)
+	stream, err := c.cc.NewStream(ctx, &NekkusHub_ServiceDesc.Streams[0], NekkusHub_SubscribeEvents_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	return out, nil
-}
-
-func (c *moduleServiceClient) StreamUpdates(ctx context.Context, opts ...grpc.CallOption) (grpc.BidiStreamingClient[UpdateRequest, UpdateResponse], error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	stream, err := c.cc.NewStream(ctx, &ModuleService_ServiceDesc.Streams[0], ModuleService_StreamUpdates_FullMethodName, cOpts...)
-	if err != nil {
+	x := &grpc.GenericClientStream[SubscribeRequest, DataEvent]{ClientStream: stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[UpdateRequest, UpdateResponse]{ClientStream: stream}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
 	return x, nil
 }
 
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type ModuleService_StreamUpdatesClient = grpc.BidiStreamingClient[UpdateRequest, UpdateResponse]
+type NekkusHub_SubscribeEventsClient = grpc.ServerStreamingClient[DataEvent]
 
-// ModuleServiceServer is the server API for ModuleService service.
-// All implementations must embed UnimplementedModuleServiceServer
-// for forward compatibility.
-//
-// Hub-to-Module Service
-type ModuleServiceServer interface {
-	// Health check
-	Ping(context.Context, *PingRequest) (*PongResponse, error)
-	// Get current widget data
-	GetWidgetData(context.Context, *WidgetRequest) (*WidgetDataResponse, error)
-	// Execute module action
-	ExecuteAction(context.Context, *ActionRequest) (*ActionResponse, error)
-	// Stream real-time updates
-	StreamUpdates(grpc.BidiStreamingServer[UpdateRequest, UpdateResponse]) error
-	mustEmbedUnimplementedModuleServiceServer()
+func (c *nekkusHubClient) CrossQuery(ctx context.Context, in *CrossQueryRequest, opts ...grpc.CallOption) (*QueryResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(QueryResponse)
+	err := c.cc.Invoke(ctx, NekkusHub_CrossQuery_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// UnimplementedModuleServiceServer must be embedded to have
+func (c *nekkusHubClient) CrossExecute(ctx context.Context, in *CrossExecuteRequest, opts ...grpc.CallOption) (*ExecuteResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ExecuteResponse)
+	err := c.cc.Invoke(ctx, NekkusHub_CrossExecute_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// NekkusHubServer is the server API for NekkusHub service.
+// All implementations must embed UnimplementedNekkusHubServer
+// for forward compatibility.
+type NekkusHubServer interface {
+	Register(context.Context, *ModuleInfo) (*RegisterResponse, error)
+	PublishEvent(context.Context, *DataEvent) (*PublishResponse, error)
+	SubscribeEvents(*SubscribeRequest, grpc.ServerStreamingServer[DataEvent]) error
+	CrossQuery(context.Context, *CrossQueryRequest) (*QueryResponse, error)
+	CrossExecute(context.Context, *CrossExecuteRequest) (*ExecuteResponse, error)
+	mustEmbedUnimplementedNekkusHubServer()
+}
+
+// UnimplementedNekkusHubServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedModuleServiceServer struct{}
+type UnimplementedNekkusHubServer struct{}
 
-func (UnimplementedModuleServiceServer) Ping(context.Context, *PingRequest) (*PongResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method Ping not implemented")
+func (UnimplementedNekkusHubServer) Register(context.Context, *ModuleInfo) (*RegisterResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method Register not implemented")
 }
-func (UnimplementedModuleServiceServer) GetWidgetData(context.Context, *WidgetRequest) (*WidgetDataResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method GetWidgetData not implemented")
+func (UnimplementedNekkusHubServer) PublishEvent(context.Context, *DataEvent) (*PublishResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method PublishEvent not implemented")
 }
-func (UnimplementedModuleServiceServer) ExecuteAction(context.Context, *ActionRequest) (*ActionResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method ExecuteAction not implemented")
+func (UnimplementedNekkusHubServer) SubscribeEvents(*SubscribeRequest, grpc.ServerStreamingServer[DataEvent]) error {
+	return status.Error(codes.Unimplemented, "method SubscribeEvents not implemented")
 }
-func (UnimplementedModuleServiceServer) StreamUpdates(grpc.BidiStreamingServer[UpdateRequest, UpdateResponse]) error {
-	return status.Error(codes.Unimplemented, "method StreamUpdates not implemented")
+func (UnimplementedNekkusHubServer) CrossQuery(context.Context, *CrossQueryRequest) (*QueryResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method CrossQuery not implemented")
 }
-func (UnimplementedModuleServiceServer) mustEmbedUnimplementedModuleServiceServer() {}
-func (UnimplementedModuleServiceServer) testEmbeddedByValue()                       {}
+func (UnimplementedNekkusHubServer) CrossExecute(context.Context, *CrossExecuteRequest) (*ExecuteResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method CrossExecute not implemented")
+}
+func (UnimplementedNekkusHubServer) mustEmbedUnimplementedNekkusHubServer() {}
+func (UnimplementedNekkusHubServer) testEmbeddedByValue()                   {}
 
-// UnsafeModuleServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to ModuleServiceServer will
+// UnsafeNekkusHubServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to NekkusHubServer will
 // result in compilation errors.
-type UnsafeModuleServiceServer interface {
-	mustEmbedUnimplementedModuleServiceServer()
+type UnsafeNekkusHubServer interface {
+	mustEmbedUnimplementedNekkusHubServer()
 }
 
-func RegisterModuleServiceServer(s grpc.ServiceRegistrar, srv ModuleServiceServer) {
-	// If the following call panics, it indicates UnimplementedModuleServiceServer was
+func RegisterNekkusHubServer(s grpc.ServiceRegistrar, srv NekkusHubServer) {
+	// If the following call panics, it indicates UnimplementedNekkusHubServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&ModuleService_ServiceDesc, srv)
+	s.RegisterService(&NekkusHub_ServiceDesc, srv)
 }
 
-func _ModuleService_Ping_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PingRequest)
+func _NekkusHub_Register_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ModuleInfo)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ModuleServiceServer).Ping(ctx, in)
+		return srv.(NekkusHubServer).Register(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: ModuleService_Ping_FullMethodName,
+		FullMethod: NekkusHub_Register_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ModuleServiceServer).Ping(ctx, req.(*PingRequest))
+		return srv.(NekkusHubServer).Register(ctx, req.(*ModuleInfo))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ModuleService_GetWidgetData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(WidgetRequest)
+func _NekkusHub_PublishEvent_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DataEvent)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ModuleServiceServer).GetWidgetData(ctx, in)
+		return srv.(NekkusHubServer).PublishEvent(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: ModuleService_GetWidgetData_FullMethodName,
+		FullMethod: NekkusHub_PublishEvent_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ModuleServiceServer).GetWidgetData(ctx, req.(*WidgetRequest))
+		return srv.(NekkusHubServer).PublishEvent(ctx, req.(*DataEvent))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ModuleService_ExecuteAction_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ActionRequest)
-	if err := dec(in); err != nil {
-		return nil, err
+func _NekkusHub_SubscribeEvents_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(SubscribeRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
 	}
-	if interceptor == nil {
-		return srv.(ModuleServiceServer).ExecuteAction(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: ModuleService_ExecuteAction_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ModuleServiceServer).ExecuteAction(ctx, req.(*ActionRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ModuleService_StreamUpdates_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(ModuleServiceServer).StreamUpdates(&grpc.GenericServerStream[UpdateRequest, UpdateResponse]{ServerStream: stream})
+	return srv.(NekkusHubServer).SubscribeEvents(m, &grpc.GenericServerStream[SubscribeRequest, DataEvent]{ServerStream: stream})
 }
 
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type ModuleService_StreamUpdatesServer = grpc.BidiStreamingServer[UpdateRequest, UpdateResponse]
+type NekkusHub_SubscribeEventsServer = grpc.ServerStreamingServer[DataEvent]
 
-// ModuleService_ServiceDesc is the grpc.ServiceDesc for ModuleService service.
+func _NekkusHub_CrossQuery_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CrossQueryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NekkusHubServer).CrossQuery(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: NekkusHub_CrossQuery_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NekkusHubServer).CrossQuery(ctx, req.(*CrossQueryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _NekkusHub_CrossExecute_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CrossExecuteRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NekkusHubServer).CrossExecute(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: NekkusHub_CrossExecute_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NekkusHubServer).CrossExecute(ctx, req.(*CrossExecuteRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// NekkusHub_ServiceDesc is the grpc.ServiceDesc for NekkusHub service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var ModuleService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "nekkus.hub.ModuleService",
-	HandlerType: (*ModuleServiceServer)(nil),
+var NekkusHub_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "nekkus.NekkusHub",
+	HandlerType: (*NekkusHubServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "Ping",
-			Handler:    _ModuleService_Ping_Handler,
+			MethodName: "Register",
+			Handler:    _NekkusHub_Register_Handler,
 		},
 		{
-			MethodName: "GetWidgetData",
-			Handler:    _ModuleService_GetWidgetData_Handler,
+			MethodName: "PublishEvent",
+			Handler:    _NekkusHub_PublishEvent_Handler,
 		},
 		{
-			MethodName: "ExecuteAction",
-			Handler:    _ModuleService_ExecuteAction_Handler,
+			MethodName: "CrossQuery",
+			Handler:    _NekkusHub_CrossQuery_Handler,
+		},
+		{
+			MethodName: "CrossExecute",
+			Handler:    _NekkusHub_CrossExecute_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
 		{
-			StreamName:    "StreamUpdates",
-			Handler:       _ModuleService_StreamUpdates_Handler,
+			StreamName:    "SubscribeEvents",
+			Handler:       _NekkusHub_SubscribeEvents_Handler,
 			ServerStreams: true,
-			ClientStreams: true,
 		},
 	},
 	Metadata: "proto/hub.proto",

@@ -1,67 +1,40 @@
 syntax = "proto3";
-package nekkus.hub;
-
+package nekkus;
+import "proto/module.proto";
 option go_package = "github.com/GalitskyKK/nekkus-core/pkg/protocol";
 
-// Hub-to-Module Service
-service ModuleService {
-  // Health check
-  rpc Ping(PingRequest) returns (PongResponse);
-
-  // Get current widget data
-  rpc GetWidgetData(WidgetRequest) returns (WidgetDataResponse);
-
-  // Execute module action
-  rpc ExecuteAction(ActionRequest) returns (ActionResponse);
-
-  // Stream real-time updates
-  rpc StreamUpdates(stream UpdateRequest) returns (stream UpdateResponse);
+service NekkusHub {
+  rpc Register(ModuleInfo) returns (RegisterResponse);
+  rpc PublishEvent(DataEvent) returns (PublishResponse);
+  rpc SubscribeEvents(SubscribeRequest) returns (stream DataEvent);
+  rpc CrossQuery(CrossQueryRequest) returns (QueryResponse);
+  rpc CrossExecute(CrossExecuteRequest) returns (ExecuteResponse);
 }
 
-message PingRequest {
-  int64 timestamp = 1;
-}
-
-message PongResponse {
-  int64 timestamp = 1;
-  ModuleStatus status = 2;
-}
-
-enum ModuleStatus {
-  UNKNOWN = 0;
-  RUNNING = 1;
-  IDLE = 2;
-  BUSY = 3;
-  ERROR = 4;
-}
-
-message WidgetRequest {
-  string widget_id = 1;
-}
-
-message WidgetDataResponse {
-  string widget_type = 1;  // "chart", "button", "text", "list"
-  bytes data = 2;          // JSON payload
-  int64 timestamp = 3;
-}
-
-message ActionRequest {
-  string action_id = 1;
-  map<string, string> params = 2;
-}
-
-message ActionResponse {
+message RegisterResponse {
   bool success = 1;
-  string message = 2;
-  bytes result = 3;
+  string hub_id = 2;
+  map<string, string> config = 3;
 }
 
-message UpdateRequest {
-  string subscription_id = 1;
+message PublishResponse {
+  bool success = 1;
 }
 
-message UpdateResponse {
-  string event_type = 1;
-  bytes payload = 2;
-  int64 timestamp = 3;
+message SubscribeRequest {
+  string subscriber_id = 1;
+  repeated string topics = 2;
+  repeated string source_modules = 3;
+}
+
+message CrossQueryRequest {
+  string source_module = 1;
+  string target_module = 2;
+  QueryRequest query = 3;
+}
+
+message CrossExecuteRequest {
+  string source_module = 1;
+  string target_module = 2;
+  ExecuteRequest request = 3;
 }

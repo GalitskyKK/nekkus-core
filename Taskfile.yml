@@ -1,0 +1,20 @@
+version: '3'
+
+tasks:
+  proto:
+    desc: Generate Go and gRPC code from proto files
+    cmds:
+      - protoc -I. --go_out=. --go_opt=module=github.com/GalitskyKK/nekkus-core
+        --go-grpc_out=. --go-grpc_opt=module=github.com/GalitskyKK/nekkus-core
+        proto/module.proto proto/hub.proto
+
+  build:
+    desc: Build all packages (desktop requires CGO on Windows/Linux)
+    cmds:
+      - go build ./...
+
+  deps:
+    desc: Install protoc plugins (run once)
+    cmds:
+      - go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+      - go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest

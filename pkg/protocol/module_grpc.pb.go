@@ -19,229 +19,411 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	HubService_Register_FullMethodName      = "/nekkus.module.HubService/Register"
-	HubService_Notify_FullMethodName        = "/nekkus.module.HubService/Notify"
-	HubService_GetSystemInfo_FullMethodName = "/nekkus.module.HubService/GetSystemInfo"
-	HubService_Log_FullMethodName           = "/nekkus.module.HubService/Log"
+	NekkusModule_GetInfo_FullMethodName         = "/nekkus.NekkusModule/GetInfo"
+	NekkusModule_Health_FullMethodName          = "/nekkus.NekkusModule/Health"
+	NekkusModule_GetWidgets_FullMethodName      = "/nekkus.NekkusModule/GetWidgets"
+	NekkusModule_GetActions_FullMethodName      = "/nekkus.NekkusModule/GetActions"
+	NekkusModule_StreamData_FullMethodName      = "/nekkus.NekkusModule/StreamData"
+	NekkusModule_Query_FullMethodName           = "/nekkus.NekkusModule/Query"
+	NekkusModule_Execute_FullMethodName         = "/nekkus.NekkusModule/Execute"
+	NekkusModule_GetSnapshot_FullMethodName     = "/nekkus.NekkusModule/GetSnapshot"
+	NekkusModule_RestoreSnapshot_FullMethodName = "/nekkus.NekkusModule/RestoreSnapshot"
 )
 
-// HubServiceClient is the client API for HubService service.
+// NekkusModuleClient is the client API for NekkusModule service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-//
-// Module-to-Hub Service
-type HubServiceClient interface {
-	// Register module with hub
-	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error)
-	// Send notification to hub
-	Notify(ctx context.Context, in *NotificationRequest, opts ...grpc.CallOption) (*NotificationResponse, error)
-	// Request system info
-	GetSystemInfo(ctx context.Context, in *SystemInfoRequest, opts ...grpc.CallOption) (*SystemInfoResponse, error)
-	// Log message to hub
-	Log(ctx context.Context, in *LogRequest, opts ...grpc.CallOption) (*LogResponse, error)
+type NekkusModuleClient interface {
+	GetInfo(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*ModuleInfo, error)
+	Health(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*HealthStatus, error)
+	GetWidgets(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*WidgetList, error)
+	GetActions(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*ActionList, error)
+	StreamData(ctx context.Context, in *StreamRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[DataEvent], error)
+	Query(ctx context.Context, in *QueryRequest, opts ...grpc.CallOption) (*QueryResponse, error)
+	Execute(ctx context.Context, in *ExecuteRequest, opts ...grpc.CallOption) (*ExecuteResponse, error)
+	GetSnapshot(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*StateSnapshot, error)
+	RestoreSnapshot(ctx context.Context, in *StateSnapshot, opts ...grpc.CallOption) (*RestoreResult, error)
 }
 
-type hubServiceClient struct {
+type nekkusModuleClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewHubServiceClient(cc grpc.ClientConnInterface) HubServiceClient {
-	return &hubServiceClient{cc}
+func NewNekkusModuleClient(cc grpc.ClientConnInterface) NekkusModuleClient {
+	return &nekkusModuleClient{cc}
 }
 
-func (c *hubServiceClient) Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error) {
+func (c *nekkusModuleClient) GetInfo(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*ModuleInfo, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(RegisterResponse)
-	err := c.cc.Invoke(ctx, HubService_Register_FullMethodName, in, out, cOpts...)
+	out := new(ModuleInfo)
+	err := c.cc.Invoke(ctx, NekkusModule_GetInfo_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *hubServiceClient) Notify(ctx context.Context, in *NotificationRequest, opts ...grpc.CallOption) (*NotificationResponse, error) {
+func (c *nekkusModuleClient) Health(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*HealthStatus, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(NotificationResponse)
-	err := c.cc.Invoke(ctx, HubService_Notify_FullMethodName, in, out, cOpts...)
+	out := new(HealthStatus)
+	err := c.cc.Invoke(ctx, NekkusModule_Health_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *hubServiceClient) GetSystemInfo(ctx context.Context, in *SystemInfoRequest, opts ...grpc.CallOption) (*SystemInfoResponse, error) {
+func (c *nekkusModuleClient) GetWidgets(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*WidgetList, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(SystemInfoResponse)
-	err := c.cc.Invoke(ctx, HubService_GetSystemInfo_FullMethodName, in, out, cOpts...)
+	out := new(WidgetList)
+	err := c.cc.Invoke(ctx, NekkusModule_GetWidgets_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *hubServiceClient) Log(ctx context.Context, in *LogRequest, opts ...grpc.CallOption) (*LogResponse, error) {
+func (c *nekkusModuleClient) GetActions(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*ActionList, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(LogResponse)
-	err := c.cc.Invoke(ctx, HubService_Log_FullMethodName, in, out, cOpts...)
+	out := new(ActionList)
+	err := c.cc.Invoke(ctx, NekkusModule_GetActions_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// HubServiceServer is the server API for HubService service.
-// All implementations must embed UnimplementedHubServiceServer
+func (c *nekkusModuleClient) StreamData(ctx context.Context, in *StreamRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[DataEvent], error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	stream, err := c.cc.NewStream(ctx, &NekkusModule_ServiceDesc.Streams[0], NekkusModule_StreamData_FullMethodName, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &grpc.GenericClientStream[StreamRequest, DataEvent]{ClientStream: stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type NekkusModule_StreamDataClient = grpc.ServerStreamingClient[DataEvent]
+
+func (c *nekkusModuleClient) Query(ctx context.Context, in *QueryRequest, opts ...grpc.CallOption) (*QueryResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(QueryResponse)
+	err := c.cc.Invoke(ctx, NekkusModule_Query_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *nekkusModuleClient) Execute(ctx context.Context, in *ExecuteRequest, opts ...grpc.CallOption) (*ExecuteResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ExecuteResponse)
+	err := c.cc.Invoke(ctx, NekkusModule_Execute_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *nekkusModuleClient) GetSnapshot(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*StateSnapshot, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StateSnapshot)
+	err := c.cc.Invoke(ctx, NekkusModule_GetSnapshot_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *nekkusModuleClient) RestoreSnapshot(ctx context.Context, in *StateSnapshot, opts ...grpc.CallOption) (*RestoreResult, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RestoreResult)
+	err := c.cc.Invoke(ctx, NekkusModule_RestoreSnapshot_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// NekkusModuleServer is the server API for NekkusModule service.
+// All implementations must embed UnimplementedNekkusModuleServer
 // for forward compatibility.
-//
-// Module-to-Hub Service
-type HubServiceServer interface {
-	// Register module with hub
-	Register(context.Context, *RegisterRequest) (*RegisterResponse, error)
-	// Send notification to hub
-	Notify(context.Context, *NotificationRequest) (*NotificationResponse, error)
-	// Request system info
-	GetSystemInfo(context.Context, *SystemInfoRequest) (*SystemInfoResponse, error)
-	// Log message to hub
-	Log(context.Context, *LogRequest) (*LogResponse, error)
-	mustEmbedUnimplementedHubServiceServer()
+type NekkusModuleServer interface {
+	GetInfo(context.Context, *Empty) (*ModuleInfo, error)
+	Health(context.Context, *Empty) (*HealthStatus, error)
+	GetWidgets(context.Context, *Empty) (*WidgetList, error)
+	GetActions(context.Context, *Empty) (*ActionList, error)
+	StreamData(*StreamRequest, grpc.ServerStreamingServer[DataEvent]) error
+	Query(context.Context, *QueryRequest) (*QueryResponse, error)
+	Execute(context.Context, *ExecuteRequest) (*ExecuteResponse, error)
+	GetSnapshot(context.Context, *Empty) (*StateSnapshot, error)
+	RestoreSnapshot(context.Context, *StateSnapshot) (*RestoreResult, error)
+	mustEmbedUnimplementedNekkusModuleServer()
 }
 
-// UnimplementedHubServiceServer must be embedded to have
+// UnimplementedNekkusModuleServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedHubServiceServer struct{}
+type UnimplementedNekkusModuleServer struct{}
 
-func (UnimplementedHubServiceServer) Register(context.Context, *RegisterRequest) (*RegisterResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method Register not implemented")
+func (UnimplementedNekkusModuleServer) GetInfo(context.Context, *Empty) (*ModuleInfo, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetInfo not implemented")
 }
-func (UnimplementedHubServiceServer) Notify(context.Context, *NotificationRequest) (*NotificationResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method Notify not implemented")
+func (UnimplementedNekkusModuleServer) Health(context.Context, *Empty) (*HealthStatus, error) {
+	return nil, status.Error(codes.Unimplemented, "method Health not implemented")
 }
-func (UnimplementedHubServiceServer) GetSystemInfo(context.Context, *SystemInfoRequest) (*SystemInfoResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method GetSystemInfo not implemented")
+func (UnimplementedNekkusModuleServer) GetWidgets(context.Context, *Empty) (*WidgetList, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetWidgets not implemented")
 }
-func (UnimplementedHubServiceServer) Log(context.Context, *LogRequest) (*LogResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method Log not implemented")
+func (UnimplementedNekkusModuleServer) GetActions(context.Context, *Empty) (*ActionList, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetActions not implemented")
 }
-func (UnimplementedHubServiceServer) mustEmbedUnimplementedHubServiceServer() {}
-func (UnimplementedHubServiceServer) testEmbeddedByValue()                    {}
+func (UnimplementedNekkusModuleServer) StreamData(*StreamRequest, grpc.ServerStreamingServer[DataEvent]) error {
+	return status.Error(codes.Unimplemented, "method StreamData not implemented")
+}
+func (UnimplementedNekkusModuleServer) Query(context.Context, *QueryRequest) (*QueryResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method Query not implemented")
+}
+func (UnimplementedNekkusModuleServer) Execute(context.Context, *ExecuteRequest) (*ExecuteResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method Execute not implemented")
+}
+func (UnimplementedNekkusModuleServer) GetSnapshot(context.Context, *Empty) (*StateSnapshot, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetSnapshot not implemented")
+}
+func (UnimplementedNekkusModuleServer) RestoreSnapshot(context.Context, *StateSnapshot) (*RestoreResult, error) {
+	return nil, status.Error(codes.Unimplemented, "method RestoreSnapshot not implemented")
+}
+func (UnimplementedNekkusModuleServer) mustEmbedUnimplementedNekkusModuleServer() {}
+func (UnimplementedNekkusModuleServer) testEmbeddedByValue()                      {}
 
-// UnsafeHubServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to HubServiceServer will
+// UnsafeNekkusModuleServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to NekkusModuleServer will
 // result in compilation errors.
-type UnsafeHubServiceServer interface {
-	mustEmbedUnimplementedHubServiceServer()
+type UnsafeNekkusModuleServer interface {
+	mustEmbedUnimplementedNekkusModuleServer()
 }
 
-func RegisterHubServiceServer(s grpc.ServiceRegistrar, srv HubServiceServer) {
-	// If the following call panics, it indicates UnimplementedHubServiceServer was
+func RegisterNekkusModuleServer(s grpc.ServiceRegistrar, srv NekkusModuleServer) {
+	// If the following call panics, it indicates UnimplementedNekkusModuleServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&HubService_ServiceDesc, srv)
+	s.RegisterService(&NekkusModule_ServiceDesc, srv)
 }
 
-func _HubService_Register_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RegisterRequest)
+func _NekkusModule_GetInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(HubServiceServer).Register(ctx, in)
+		return srv.(NekkusModuleServer).GetInfo(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: HubService_Register_FullMethodName,
+		FullMethod: NekkusModule_GetInfo_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(HubServiceServer).Register(ctx, req.(*RegisterRequest))
+		return srv.(NekkusModuleServer).GetInfo(ctx, req.(*Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _HubService_Notify_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(NotificationRequest)
+func _NekkusModule_Health_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(HubServiceServer).Notify(ctx, in)
+		return srv.(NekkusModuleServer).Health(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: HubService_Notify_FullMethodName,
+		FullMethod: NekkusModule_Health_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(HubServiceServer).Notify(ctx, req.(*NotificationRequest))
+		return srv.(NekkusModuleServer).Health(ctx, req.(*Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _HubService_GetSystemInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SystemInfoRequest)
+func _NekkusModule_GetWidgets_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(HubServiceServer).GetSystemInfo(ctx, in)
+		return srv.(NekkusModuleServer).GetWidgets(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: HubService_GetSystemInfo_FullMethodName,
+		FullMethod: NekkusModule_GetWidgets_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(HubServiceServer).GetSystemInfo(ctx, req.(*SystemInfoRequest))
+		return srv.(NekkusModuleServer).GetWidgets(ctx, req.(*Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _HubService_Log_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(LogRequest)
+func _NekkusModule_GetActions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(HubServiceServer).Log(ctx, in)
+		return srv.(NekkusModuleServer).GetActions(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: HubService_Log_FullMethodName,
+		FullMethod: NekkusModule_GetActions_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(HubServiceServer).Log(ctx, req.(*LogRequest))
+		return srv.(NekkusModuleServer).GetActions(ctx, req.(*Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// HubService_ServiceDesc is the grpc.ServiceDesc for HubService service.
+func _NekkusModule_StreamData_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(StreamRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(NekkusModuleServer).StreamData(m, &grpc.GenericServerStream[StreamRequest, DataEvent]{ServerStream: stream})
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type NekkusModule_StreamDataServer = grpc.ServerStreamingServer[DataEvent]
+
+func _NekkusModule_Query_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NekkusModuleServer).Query(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: NekkusModule_Query_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NekkusModuleServer).Query(ctx, req.(*QueryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _NekkusModule_Execute_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ExecuteRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NekkusModuleServer).Execute(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: NekkusModule_Execute_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NekkusModuleServer).Execute(ctx, req.(*ExecuteRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _NekkusModule_GetSnapshot_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NekkusModuleServer).GetSnapshot(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: NekkusModule_GetSnapshot_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NekkusModuleServer).GetSnapshot(ctx, req.(*Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _NekkusModule_RestoreSnapshot_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StateSnapshot)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NekkusModuleServer).RestoreSnapshot(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: NekkusModule_RestoreSnapshot_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NekkusModuleServer).RestoreSnapshot(ctx, req.(*StateSnapshot))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// NekkusModule_ServiceDesc is the grpc.ServiceDesc for NekkusModule service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var HubService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "nekkus.module.HubService",
-	HandlerType: (*HubServiceServer)(nil),
+var NekkusModule_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "nekkus.NekkusModule",
+	HandlerType: (*NekkusModuleServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "Register",
-			Handler:    _HubService_Register_Handler,
+			MethodName: "GetInfo",
+			Handler:    _NekkusModule_GetInfo_Handler,
 		},
 		{
-			MethodName: "Notify",
-			Handler:    _HubService_Notify_Handler,
+			MethodName: "Health",
+			Handler:    _NekkusModule_Health_Handler,
 		},
 		{
-			MethodName: "GetSystemInfo",
-			Handler:    _HubService_GetSystemInfo_Handler,
+			MethodName: "GetWidgets",
+			Handler:    _NekkusModule_GetWidgets_Handler,
 		},
 		{
-			MethodName: "Log",
-			Handler:    _HubService_Log_Handler,
+			MethodName: "GetActions",
+			Handler:    _NekkusModule_GetActions_Handler,
+		},
+		{
+			MethodName: "Query",
+			Handler:    _NekkusModule_Query_Handler,
+		},
+		{
+			MethodName: "Execute",
+			Handler:    _NekkusModule_Execute_Handler,
+		},
+		{
+			MethodName: "GetSnapshot",
+			Handler:    _NekkusModule_GetSnapshot_Handler,
+		},
+		{
+			MethodName: "RestoreSnapshot",
+			Handler:    _NekkusModule_RestoreSnapshot_Handler,
 		},
 	},
-	Streams:  []grpc.StreamDesc{},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "StreamData",
+			Handler:       _NekkusModule_StreamData_Handler,
+			ServerStreams: true,
+		},
+	},
 	Metadata: "proto/module.proto",
 }
