@@ -38,6 +38,8 @@ func OpenWindow(cfg AppConfig) {
 	w.Navigate(url)
 
 	w.Run()
+	// Окно закрыто — приложение остаётся в трее; показываем уведомление.
+	NotifyTrayMinimized(cfg.ModuleName)
 }
 
 func ShowWindow(cfg AppConfig) {
